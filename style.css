@@ -1,0 +1,133 @@
+body *, *::before, *::after {
+  font: inherit;
+  box-sizing: border-box;
+  color: inherit;
+  user-select: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  user-select: none;
+  background: #888;
+  height: 100vh;
+  display: grid;
+  grid-template:
+    "toolbar toolbar" min-content
+    "editor sidebar" auto / auto calc(200px * var(--zoom));
+  font-size: calc(16px * var(--zoom));
+}
+
+#toolbar {
+  display: flex;
+  gap: calc(4px * var(--zoom));
+  padding: calc(4px * var(--zoom));
+  background: #999;
+  border-bottom: calc(2px * var(--zoom)) solid #777;
+  grid-area: toolbar;
+}
+
+.button {
+  color: #000;
+  --button-color: #aaa;
+  background: var(--button-color);
+  border: calc(1px * var(--zoom)) outset var(--button-color);
+  padding: calc(2px * var(--zoom)) calc(8px * var(--zoom));
+}
+
+button:not(:disabled):hover {
+  --button-color: #bbb;
+}
+
+button:not(:disabled):active:focus {
+  --button-color: #999;
+  border-style: inset;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+input {
+  display: none;
+}
+
+rect {
+  fill: var(--rect);
+  width: 8px;
+  height: 8px;
+}
+
+path {
+  fill: var(--fill);
+  stroke: var(--stroke);
+  stroke-width: 1;
+}
+
+#editor {
+  grid-area: editor;
+  padding: calc(4px * var(--zoom));
+  overflow: auto;
+}
+
+#canvas-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+svg {
+  position: absolute;
+  inset: 0;
+  --rect: #fff8;
+  --fill: #fff2;
+  --stroke: #fff3;
+}
+
+#sidebar {
+  grid-area: sidebar;
+  padding: calc(4px * var(--zoom));
+  background: #999;
+  border-left: calc(2px * var(--zoom)) solid #777;
+}
+
+.result {
+  height: calc(70px * var(--zoom));
+  border: calc(1px * var(--zoom)) solid #000;
+  padding: calc(4px * var(--zoom));
+  display: grid;
+  grid-template:
+    "name menu" min-content / auto calc(20px * var(--zoom));
+}
+
+.result + .result {
+  margin-top: calc(4px * var(--zoom));
+}
+
+.result--dark {
+  color: #fff;
+}
+
+.result-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+
+.result-menu-button {
+  position: relative;
+  padding: 0;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.result-menu {
+  color: revert;
+  font-size: calc(16px * var(--zoom));
+  border-width: calc(1px * var(--zoom));
+  outline: none;
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+}
