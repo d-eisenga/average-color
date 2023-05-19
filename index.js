@@ -67,8 +67,6 @@ const results = [];
 
 // #endregion
 
-const ctx = canvasEl.getContext('2d', {willReadFrequently: true});
-
 // #region Toolbar
 // ===============
 
@@ -95,17 +93,6 @@ loadFileEl.onclick = () => fileInputEl.click();
 pathColorEl.onclick = () => colorInputEl.click();
 
 // #endregion
-
-window.onresize = () => {
-  const ratio = Math.max(
-    window.innerWidth / window.outerWidth,
-    window.innerHeight / window.outerHeight
-  );
-  document.body.style.setProperty('--zoom', ratio);
-};
-
-window.onresize();
-
 
 // #region Load image
 // ==================
@@ -332,8 +319,6 @@ const calculateFromImage = () => {
     count++;
   }
 
-  console.log(red, green, blue);
-
   addResult(Math.sqrt(red / count), Math.sqrt(green / count), Math.sqrt(blue / count));
 };
 
@@ -343,7 +328,7 @@ const calculateFromImage = () => {
 // ===============
 
 const addResult = (r, g, b) => {
-  results.push({r, g, b, image: imageName});
+  results.push({r, g, b, name: imageName});
   updateResults();
   unlockButtons();
 };
@@ -353,51 +338,69 @@ const deleteResult = result => {
   updateResults();
 };
 
+const renameResult = result => {
+  const newName = prompt('New name:', result.name);
+  if (!newName) { return; }
+  result.name = newName;
+  updateResults();
+};
+
 const handleMenuSelect = result => evt => {
   switch (evt.target.value) {
     case 'copy-hex': return copyHex(result);
     case 'copy-css-rgb': return copyCssRgb(result);
     case 'copy-css-rgb': return copyCssRgb(result);
     case 'copy-blender': return copyBlender(result);
+    case 'rename': return renameResult(result);
     case 'delete': return deleteResult(result);
   }
   evt.target.value = '';
   evt.target.blur();
 };
 
-const showResultMenu = evt => {
-  evt.preventDefault();
-  console.log(evt.target);
-  evt.target.querySelector('.result-menu').focus();
+let averageResult = null;
+
+const addResultEl = (result, allowDelete = true) => {
+  const {r, g, b, name} = result;
+  const dark = (r + g + b) / 3 < 128;
+  const menuEl = el('select', {class: 'result-menu', value: '', onchange: handleMenuSelect(result)}, [
+    el('option', {value: 'copy-hex'}, ['Copy as hex']),
+    el('option', {value: 'copy-css-rgb'}, ['Copy as CSS rgb()']),
+    el('option', {value: 'copy-blender'}, ['Copy as Blender color']),
+    ...(allowDelete ? [
+      el('option', {value: 'rename'}, ['Rename']),
+      el('option', {value: 'delete'}, ['Delete']),
+    ] : []),
+  ]);
+  menuEl.value = '';
+  resultsEl.appendChild(
+    el('div', {
+      class: `result ${dark ? 'result--dark' : ''}`,
+      style: {
+        backgroundColor: `rgb(${r}, ${g}, ${b})`,
+      },
+    }, [
+      el('div', {class: 'result-name', title: name}, [name]),
+      el('div', {class: 'button result-menu-button'}, [
+        '▼',
+        menuEl,
+      ]),
+    ])
+  );
 };
 
 const updateResults = () => {
   resultsEl.innerHTML = '';
   for (const result of results) {
-    const {r, g, b, image} = result;
-    const dark = (r + g + b) / 3 < 128;
-    const menuEl = el('select', {class: 'result-menu', value: '', onchange: handleMenuSelect(result)}, [
-      el('option', {value: 'copy-hex'}, ['Copy as hex']),
-      el('option', {value: 'copy-css-rgb'}, ['Copy as CSS rgb()']),
-      el('option', {value: 'copy-blender'}, ['Copy as Blender color']),
-      el('option', {value: 'delete'}, ['Delete']),
-    ]);
-    menuEl.value = '';
-    resultsEl.appendChild(
-      el('div', {
-        class: `result ${dark ? 'result--dark' : ''}`,
-        style: {
-          backgroundColor: `rgb(${r}, ${g}, ${b})`,
-        },
-        oncontextmenu: showResultMenu,
-      }, [
-        el('div', {class: 'result-name', title: image}, [image]),
-        el('div', {class: 'button result-menu-button'}, [
-          '▼',
-          menuEl,
-        ]),
-      ])
-    );
+    addResultEl(result);
+  }
+  if (results.length > 1) {
+    const [r, g, b] = results.reduce(
+      ([ra, ga, ba], {r, g, b}) => [ra + r ** 2, ga + g ** 2, ba + b ** 2],
+      [0, 0, 0]
+    ).map(x => Math.sqrt(x / results.length));
+    averageResult = {r, g, b, name: 'Average of all results'};
+    addResultEl(averageResult, false);
   }
 };
 
@@ -423,3 +426,15 @@ const copyBlender = ({r, g, b}) => {
 };
 
 // #endregion
+
+const ctx = canvasEl.getContext('2d', {willReadFrequently: true});
+
+window.onresize = () => {
+  const ratio = Math.max(
+    window.innerWidth / window.outerWidth,
+    window.innerHeight / window.outerHeight
+  );
+  document.body.style.setProperty('--zoom', ratio);
+};
+
+window.onresize();
