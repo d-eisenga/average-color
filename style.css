@@ -1,4 +1,4 @@
-body *, *::before, *::after {
+body *, *:before, *:after {
   font: inherit;
   box-sizing: border-box;
   color: inherit;
@@ -7,7 +7,7 @@ body *, *::before, *::after {
 
 body {
   margin: 0;
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: Trebuchet MS, sans-serif;
   user-select: none;
   background: #888;
   height: 100vh;
@@ -45,7 +45,7 @@ button:not(:disabled):active:focus {
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: .5;
 }
 
 input {
@@ -53,15 +53,29 @@ input {
 }
 
 rect {
-  fill: var(--rect);
-  width: 8px;
-  height: 8px;
+  --size: calc(8px * var(--zoom));
+  --offset: calc(var(--size) * -.5);
+  fill: #fff8;
+  width: var(--size);
+  height: var(--size);
+  transform: translate(var(--offset), var(--offset));
+  stroke: #0008;
+  stroke-width: calc(1px * var(--zoom));
 }
 
-path {
-  fill: var(--fill);
-  stroke: var(--stroke);
-  stroke-width: 1;
+.path1 {
+  stroke-width: calc(1px * var(--zoom));
+  stroke-dasharray: var(--dash) var(--dash);
+  stroke: #0008;
+  fill: transparent;
+}
+
+.path2 {
+  stroke-width: calc(1px * var(--zoom));
+  stroke-dasharray: var(--dash) var(--dash);
+  stroke-dashoffset: var(--dash);
+  stroke: #fff8;
+  fill: none;
 }
 
 #editor {
@@ -75,12 +89,10 @@ path {
   display: inline-block;
 }
 
-svg {
+#editor-paths {
   position: absolute;
   inset: 0;
-  --rect: #fff8;
-  --fill: #fff2;
-  --stroke: #fff3;
+  --dash: calc(5 * var(--zoom));
 }
 
 #sidebar {
@@ -95,8 +107,7 @@ svg {
   border: calc(1px * var(--zoom)) solid #000;
   padding: calc(4px * var(--zoom));
   display: grid;
-  grid-template:
-    "name menu" min-content / auto calc(20px * var(--zoom));
+  grid-template-columns: auto min-content;
 }
 
 .result + .result {
@@ -107,7 +118,7 @@ svg {
   color: #fff;
 }
 
-.result-name {
+.result-name, .path-name {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -115,14 +126,16 @@ svg {
   line-height: 1.5;
 }
 
-.result-menu-button {
+.dropdown-button {
   position: relative;
   padding: 0;
   text-align: center;
   font-size: 0.7em;
+  width: calc(20px * var(--zoom));
+  height: calc(20px * var(--zoom));
 }
 
-.result-menu {
+.dropdown {
   color: revert;
   font-size: calc(16px * var(--zoom));
   border-width: calc(1px * var(--zoom));
@@ -130,4 +143,35 @@ svg {
   opacity: 0;
   position: absolute;
   inset: 0;
+}
+
+summary {
+  list-style-type: none;
+}
+
+summary:before {
+  content: "▶";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+}
+
+details[open] summary:before {
+  content: "▼";
+}
+
+.path {
+  --thumbnail-size: calc(40px * var(--zoom));
+  display: grid;
+  grid-template: var(--thumbnail-size) / var(--thumbnail-size) auto min-content;
+}
+
+.path.highlighted {
+  background: #aa8;
+}
+
+.path-thumbnail {
+  max-width: 100%;
+  max-height: 100%;
 }
