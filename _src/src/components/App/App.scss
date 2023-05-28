@@ -1,0 +1,21 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  background: #666;
+  display: grid;
+  grid-template:
+    "toolbar sidebar" min-content
+    "editor sidebar" 1fr / 1fr 300px;
+}
+
+.app__toolbar {
+  grid-area: toolbar;
+}
+
+.app__editor {
+  grid-area: editor;
+}
+
+.app__sidebar {
+  grid-area: sidebar;
+}

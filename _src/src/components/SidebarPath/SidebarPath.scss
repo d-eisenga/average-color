@@ -1,0 +1,18 @@
+.sidebar-path {
+  display: grid;
+  grid-template-columns: 40px 1fr 20px;
+  gap: 4px;
+  align-items: center;
+}
+
+.sidebar-path__thumbnail {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e0e0e0;
+}
+
+.sidebar-path__delete {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}

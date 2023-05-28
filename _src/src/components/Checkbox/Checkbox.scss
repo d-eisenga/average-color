@@ -1,0 +1,22 @@
+.checkbox {
+  width: 16px;
+  height: 16px;
+  background: #aaa;
+  border: 2px inset #aaa;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 12px;
+
+  &:hover {
+    background: #999;
+  }
+
+  &:active:focus {
+    background: #888;
+  }
+
+  &:checked::before {
+    content: '✔';
+    text-align: center;
+  }
+}

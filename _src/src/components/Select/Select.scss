@@ -1,0 +1,46 @@
+.select__popup {
+  background: #bbb;
+  border: 1px solid #777;
+  padding: 4px 0;
+  box-shadow: 0 4px 12px 4px #0002;
+}
+
+.select__option {
+  cursor: pointer;
+  padding: 0 8px;
+  max-width: 250px;
+
+  &:hover {
+    background: #ddd;
+  }
+}
+
+.select {
+  align-items: stretch;
+  font-size: 14px;
+}
+
+.select__box {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.select__box-value {
+  flex: 1;
+  padding: 0 8px;
+  background: #999;
+  border: 1px inset #999;
+  border-radius: 4px 0 0 4px;
+  justify-content: center;
+}
+
+.select__box-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 1px;
+}
+
+.select_hidden {
+  overflow: hidden;
+  height: 0;
+}

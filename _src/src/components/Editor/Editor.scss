@@ -1,0 +1,17 @@
+.editor__canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 4px 12px 4px #0002;
+}
+
+.editor__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.editor__paths {
+  position: absolute;
+  inset: 0;
+  --dash: 5px;
+}

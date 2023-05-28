@@ -1,0 +1,23 @@
+{
+  "extends": ["warp", "warp/es6", "warp/jsx", "warp/typescript"],
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json",
+      "./tsconfig.node.json"
+    ]
+  },
+  "rules": {
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.scss"] }],
+    "no-plusplus": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/no-unknown-property": ["error", { "ignore": ["class", "clip-path"] }]
+  },
+  "ignorePatterns": ["vite-env.d.ts"],
+  "settings": {
+    "react": {
+      "pragma": "h",
+      "version": "16.2"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.result {
+  height: 70px;
+  border: 1px solid #000;
+  padding: 4px;
+  display: grid;
+  grid-template: min-content 1fr / 1fr min-content;
+}
+
+.result--dark {
+  color: #eee;
+}
+
+.result__name {
+  min-width: 0;
+}

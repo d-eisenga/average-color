@@ -1,0 +1,28 @@
+.button {
+  color: #000;
+  --button-color: #aaa;
+  background: var(--button-color);
+  border: 2px outset var(--button-color);
+  border-radius: 4px;
+  padding: 2px 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+
+  &:not(:disabled) {
+    cursor: pointer;
+    &:hover {
+      --button-color: #bbb;
+    }
+    &:active:focus {
+      --button-color: #999;
+      border-style: inset;
+      padding: 3px 7px 1px 9px;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

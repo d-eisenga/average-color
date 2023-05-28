@@ -1,0 +1,16 @@
+.split-button {
+  flex-direction: row;
+
+  & > .button {
+    flex: 1;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right-width: 1px;
+  }
+
+  .menu .button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-left-width: 1px;
+  }
+}

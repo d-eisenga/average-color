@@ -1,0 +1,21 @@
+.menu {
+  position: relative;
+  color: #111;
+}
+
+.menu__popup {
+  background: #bbb;
+  border: 1px solid #777;
+  padding: 4px 0;
+  box-shadow: 0 4px 12px 4px #0002;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 0 8px;
+  max-width: 250px;
+
+  &:hover {
+    background: #ddd;
+  }
+}

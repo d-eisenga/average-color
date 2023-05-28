@@ -1,0 +1,15 @@
+.details__summary {
+  flex-direction: row;
+}
+
+.details__indicator {
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+}
+
+.details__content-wrapper {
+  overflow: hidden;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+}

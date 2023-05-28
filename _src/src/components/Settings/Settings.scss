@@ -1,0 +1,25 @@
+.settings {
+  box-shadow: 0 4px 12px 4px #0002;
+  background: #999;
+  border: 2px outset #999;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: 4px 16px;
+}
+
+.settings__background {
+  background: #0004;
+}
+
+.settings__option {
+  flex-direction: row;
+  align-items: center;
+}
+
+.settings__code {
+  font-family: "Lucida Sans Typewriter", "Lucida Console", monospace;
+  margin: 0 4px;
+  background: #0002;
+}
